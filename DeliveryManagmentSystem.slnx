@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/CourierService/">
+    <Project Path="CourierService.Api/CourierService.Api.csproj" Id="69ef53c0-04f1-40fb-8c60-40cdb50c8bdd" />
+    <Project Path="CourierService.Application/CourierService.Application.csproj" Id="2bf062c6-a4b9-4e26-9066-d8b5e8007121" />
+    <Project Path="CourierService.Domain/CourierService.Domain.csproj" Id="048f6d17-febd-4f6f-83f1-0251cf87fced" />
+    <Project Path="CourierService.Persistence/CourierService.Persistence.csproj" Id="ae57f416-c407-49ec-9201-056c867af26f" />
+  </Folder>
+  <Folder Name="/DeliveryService/" />
+  <Folder Name="/LoggingService/" />
+  <Folder Name="/NotificationService.Command/" />
+  <Folder Name="/NotificationService.Query/" />
+  <Folder Name="/OrderService.Command/" />
+  <Folder Name="/OrderService.Query/" />
+  <Folder Name="/RouteService/" />
+  <Folder Name="/UserService/">
+    <Project Path="UserService.Api/UserService.Api.csproj" />
+    <Project Path="UserService.Application/UserService.Application.csproj" Id="a1474d81-cc1b-4b2f-a106-cc4001798eee" />
+    <Project Path="UserService.Domain/UserService.Domain.csproj" Id="9c18dd80-4662-474c-b6b7-9854b4ebd935" />
+    <Project Path="UserService.Infrastructure/UserService.Infrastructure.csproj" Id="64a321c1-fada-46c8-aa5c-e3a7f6805b6c" />
+    <Project Path="UserService.Persistence/UserService.Persistence.csproj" Id="09dd7408-386b-44f2-8b47-4a5420e34581" />
+  </Folder>
+</Solution>
