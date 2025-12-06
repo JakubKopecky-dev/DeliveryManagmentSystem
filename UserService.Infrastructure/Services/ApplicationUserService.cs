@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using UserService.Application.DTOs.User;
 using UserService.Application.Interfaces.Services;
-using UserService.Domain.Enum;
+using UserService.Domain.Enums;
 using UserService.Infrastructure.Identity;
 
 namespace UserService.Infrastructure.Services

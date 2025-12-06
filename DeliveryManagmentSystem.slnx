@@ -5,13 +5,26 @@
     <Project Path="CourierService.Domain/CourierService.Domain.csproj" Id="048f6d17-febd-4f6f-83f1-0251cf87fced" />
     <Project Path="CourierService.Persistence/CourierService.Persistence.csproj" Id="ae57f416-c407-49ec-9201-056c867af26f" />
   </Folder>
-  <Folder Name="/DeliveryService/" />
+  <Folder Name="/DeliveryService.Command/">
+    <Project Path="DeliveryService.Command.Api/DeliveryService.Command.Api.csproj" Id="90280204-15bc-42ec-b2f2-9b7de07f381f" />
+    <Project Path="DeliveryService.Command.Application/DeliveryService.Command.Application.csproj" Id="245101cb-2e05-43d7-a9dd-4c667f4909c3" />
+    <Project Path="DeliveryService.Command.Domain/DeliveryService.Command.Domain.csproj" Id="391eb527-b16b-48a5-885d-8f5088c14278" />
+    <Project Path="DeliveryService.Command.Persistence/DeliveryService.Command.Persistence.csproj" Id="a34bb496-8c4a-4ab6-b300-74c8251315aa" />
+  </Folder>
+  <Folder Name="/DeliveryService.Query/">
+    <Project Path="DeliveryService.Query.Api/DeliveryService.Query.Api.csproj" Id="a431e4d4-1f0f-4b28-9d61-0469e09ed8a9" />
+    <Project Path="DeliveryService.Query.Application/DeliveryService.Query.Application.csproj" Id="cc4dfacc-0dd0-4ac4-b305-f56e8358c775" />
+    <Project Path="DeliveryService.Query.Domain/DeliveryService.Query.Domain.csproj" Id="141fb145-18a5-43f1-a08c-36689406cd85" />
+    <Project Path="DeliveryService.Query.Infrastructure/DeliveryService.Query.Infrastructure.csproj" Id="7c0b1ee4-c345-467e-ad43-02f9e5b49c73" />
+    <Project Path="DeliveryService.Query.SyncWorker/DeliveryService.Query.SyncWorker.csproj" Id="de0cbd07-69a8-4de4-bd41-c56a2a504901" />
+  </Folder>
   <Folder Name="/LoggingService/" />
   <Folder Name="/NotificationService.Command/" />
   <Folder Name="/NotificationService.Query/" />
-  <Folder Name="/OrderService.Command/" />
-  <Folder Name="/OrderService.Query/" />
   <Folder Name="/RouteService/" />
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Folder Name="/UserService/">
     <Project Path="UserService.Api/UserService.Api.csproj" />
     <Project Path="UserService.Application/UserService.Application.csproj" Id="a1474d81-cc1b-4b2f-a106-cc4001798eee" />

@@ -1,0 +1,18 @@
+services:
+  # Elasticsearch
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:9.0.0
+        environment:
+          - discovery.type=single-node
+          - xpack.security.enabled=false
+        ports:
+          - "9200:9200"
+  # Kibana
+    kibana:
+        image: docker.elastic.co/kibana/kibana:9.0.0
+        environment:
+          - ELASTICSEARCH_HOST=http://elasticsearch:9200
+        ports:
+          - "5601:5601"
+        depends_on:
+          - elasticsearch

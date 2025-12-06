@@ -1,6 +1,7 @@
 using CourierService.Api.GraphQL;
 using CourierService.Application;
 using CourierService.Persistence;
+using CourierService.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ builder.Services.AddGraphQLServer()
     
 
 var app = builder.Build();
+
+app.UseClientCancellationLogging();
+
 
 // Redirection
 app.UseHttpsRedirection();

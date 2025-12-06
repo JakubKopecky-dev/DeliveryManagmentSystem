@@ -1,5 +1,5 @@
 ﻿using CourierService.Application.Interfaces.Repositories;
-using CourierService.Domain.Entity;
+using CourierService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

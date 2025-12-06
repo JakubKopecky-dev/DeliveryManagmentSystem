@@ -1,13 +1,13 @@
 ﻿using CourierService.Application.DTOs.Courier;
 using CourierService.Application.Interfaces.Repositories;
 using CourierService.Application.Interfaces.Services;
-using CourierService.Domain.Entity;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CourierService.Domain.Enum;
 using System.Security.Cryptography.X509Certificates;
+using CourierService.Domain.Entities;
+using CourierService.Domain.Enums;
 
 namespace CourierService.Application.Services
 {

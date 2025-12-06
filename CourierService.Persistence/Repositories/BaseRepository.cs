@@ -25,6 +25,8 @@ namespace CourierService.Persistence.Repositories
         public async Task<IReadOnlyList<TEntity>> GetAllAsync(CancellationToken ct = default) => await _dbSet.ToListAsync(ct);
 
 
+        public async Task<IReadOnlyList<TEntity>> GetAllAsyncWithPage(uint page, uint size, CancellationToken ct) => await _dbSet.Skip((int)page * (int)size).Take((int)size).ToListAsync(ct);
+
 
         public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken ct = default)
         {

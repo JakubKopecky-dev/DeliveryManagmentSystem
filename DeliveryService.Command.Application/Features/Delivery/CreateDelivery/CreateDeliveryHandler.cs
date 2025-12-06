@@ -1,0 +1,47 @@
+﻿using DeliveryService.Command.Application.Abstraction.Massaging;
+using DeliveryService.Command.Application.DTOs.Delivery;
+using DeliveryService.Command.Application.Interfaces.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using DeliveryService.Command.Domain.Enums;
+
+namespace DeliveryService.Command.Application.Features.Delivery.CreateDelivery
+{
+    public class CreateDeliveryHandler(IDeliveryRepisotry deliveryRepisotry) : ICommandHandler<CreateDeliveryCommand, DeliveryDto>
+    {
+        private readonly IDeliveryRepisotry _deliveryRepository = deliveryRepisotry;
+
+
+
+
+        public async Task<DeliveryDto> Handle(CreateDeliveryCommand command, CancellationToken ct = default)
+        {
+            CreateDeliveryDto createDto = command.CreateDeliveryDto;
+
+
+            Domain.Entities.Delivery delivery = new()
+            {
+                Id = Guid.Empty,
+                OwnerId = createDto.OwnerId,
+                ExternalOrderId = createDto.ExternalOrderId,
+                CourierId = createDto.CourierId,
+                RecipientName = createDto.RecipientName,
+                Address = createDto.Address,
+                Phone = createDto.Phone,
+                PackageCount = (uint)createDto.PackageCount,
+                PackageWeightKg = createDto.PackageWeightKg,
+                TotalVolumeM3 = createDto.TotalVolumeM3,
+                CreatedAt = DateTime.UtcNow,
+                Status = DeliveryStatus.Created
+            };
+
+
+            Domain.Entities.Delivery createdDelivery = await _deliveryRepository.InsertAsync(delivery,ct);
+
+            return createdDelivery.DeliveryToDeliveryDto();
+        }
+
+
+    }
+}
