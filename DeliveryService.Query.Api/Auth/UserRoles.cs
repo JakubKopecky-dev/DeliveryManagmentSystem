@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UserService.Domain.Enums
+namespace DeliveryService.Query.Api.Auth
 {
-    public static class UserRoles
+    public class UserRoles
     {
         public const string Admin = nameof(Admin);
 
         public const string User = nameof(User);
+
+        public const string Company = nameof(Company);
+
     }
 }

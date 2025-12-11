@@ -5,13 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DeliveryService.Command.Domain.Enums;
+using MassTransit;
+using Shared.Contracts.Events;
 
 namespace DeliveryService.Command.Application.Features.Delivery.CreateDelivery
 {
-    public class CreateDeliveryHandler(IDeliveryRepisotry deliveryRepisotry) : ICommandHandler<CreateDeliveryCommand, DeliveryDto>
+    public class CreateDeliveryHandler(IDeliveryRepisotry deliveryRepisotry,IPublishEndpoint publishEndpoint) : ICommandHandler<CreateDeliveryCommand, DeliveryDto>
     {
         private readonly IDeliveryRepisotry _deliveryRepository = deliveryRepisotry;
-
+        private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 
 
 
@@ -38,6 +40,23 @@ namespace DeliveryService.Command.Application.Features.Delivery.CreateDelivery
 
 
             Domain.Entities.Delivery createdDelivery = await _deliveryRepository.InsertAsync(delivery,ct);
+
+            DeliveryCreatedEvent deliveryEvent = new()
+            {
+                Id = createdDelivery.Id,
+                OwnerId = createdDelivery.OwnerId,
+                ExternalOrderId = createdDelivery.ExternalOrderId,
+                CourierId = createdDelivery.CourierId,
+                RecipientName = createdDelivery.RecipientName,
+                Address = createdDelivery.Address,
+                Phone = createdDelivery.Phone,
+                PackageCount = createdDelivery.PackageCount,
+                PackageWeightKg = createdDelivery.PackageWeightKg,
+                TotalVolumeM3 = createdDelivery.TotalVolumeM3,
+                CreatedAt = createdDelivery.CreatedAt
+            };
+
+            await _publishEndpoint.Publish(deliveryEvent, ct);
 
             return createdDelivery.DeliveryToDeliveryDto();
         }

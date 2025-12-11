@@ -22,6 +22,9 @@
   <Folder Name="/NotificationService.Command/" />
   <Folder Name="/NotificationService.Query/" />
   <Folder Name="/RouteService/" />
+  <Folder Name="/Shared/">
+    <Project Path="Shared.Contracts/Shared.Contracts.csproj" Id="f62d23d2-bb14-4f14-aa4b-d1f6942843ca" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path="docker-compose.yml" />
   </Folder>

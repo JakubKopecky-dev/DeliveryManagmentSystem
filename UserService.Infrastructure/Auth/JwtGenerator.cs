@@ -32,11 +32,6 @@ namespace UserService.Infrastructure.Auth
             // 2) Build claims
             List<Claim> claims =
             [
-                new (ClaimTypes.NameIdentifier, userId.ToString()),
-                new (ClaimTypes.Name, !string.IsNullOrEmpty(userName) ? userName : "UnknownUser"),
-                new (ClaimTypes.Email, !string.IsNullOrEmpty(email) ? email : "UnknownEmail"),
-
-
                 // ASP.NET Identity compatible
                 new (ClaimTypes.NameIdentifier, userId.ToString()),
                 new (ClaimTypes.Name, userName),

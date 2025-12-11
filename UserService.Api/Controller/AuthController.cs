@@ -4,7 +4,7 @@ using UserService.Application.DTOs.Auth;
 using UserService.Application.DTOs.User;
 using UserService.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authentication;
-using UserService.Domain.Enums;
+using UserService.Domain.Types;
 
 
 namespace UserService.Api.Controller

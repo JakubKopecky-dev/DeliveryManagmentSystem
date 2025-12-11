@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Identity;
-using UserService.Domain.Enums;
+using UserService.Domain.Types;
 
 namespace UserService.Api.Auth
 {

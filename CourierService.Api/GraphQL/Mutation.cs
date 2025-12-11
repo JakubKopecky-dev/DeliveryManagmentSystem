@@ -1,8 +1,11 @@
-﻿using CourierService.Application.DTOs.Courier;
+﻿using CourierService.Api.Auth;
+using CourierService.Application.DTOs.Courier;
 using CourierService.Application.Interfaces.Services;
+using HotChocolate.Authorization;
 
 namespace CourierService.Api.GraphQL
 {
+    [Authorize(Roles = [UserRoles.Admin])]
     public class Mutation(ICourierService courierService)
     {
         private readonly ICourierService _courierService = courierService;

@@ -1,15 +1,18 @@
 ﻿using DeliveryService.Command.Application.Abstraction.Massaging;
 using DeliveryService.Command.Application.DTOs.Delivery;
 using DeliveryService.Command.Application.Interfaces.Repositories;
+using MassTransit;
+using Shared.Contracts.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DeliveryService.Command.Application.Features.Delivery.DeleteDelivery
 {
-    public class DeleteDeliveryHandler(IDeliveryRepisotry deliveryRepisotry) : ICommandHandler<DeleteDeliveryCommand,DeliveryDto?>
+    public class DeleteDeliveryHandler(IDeliveryRepisotry deliveryRepisotry, IPublishEndpoint publishEndpoint) : ICommandHandler<DeleteDeliveryCommand,DeliveryDto?>
     {
         private readonly IDeliveryRepisotry _deliveryRepisotry = deliveryRepisotry;
+        private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 
 
 
@@ -23,6 +26,8 @@ namespace DeliveryService.Command.Application.Features.Delivery.DeleteDelivery
 
             _deliveryRepisotry.Remove(delivery);
             await _deliveryRepisotry.SaveChangesAsync(ct);
+
+            await _publishEndpoint.Publish(new DeliveryDeletedEvent(command.DeliveryId), ct);
 
             return deletedDelivery;
         }

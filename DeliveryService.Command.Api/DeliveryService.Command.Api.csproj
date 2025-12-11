@@ -9,6 +9,9 @@
   <ItemGroup>
     <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.11" />
     <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="15.1.11" />
+    <PackageReference Include="MassTransit" Version="8.5.7" />
+    <PackageReference Include="MassTransit.Kafka" Version="8.5.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,6 +22,7 @@
     <ProjectReference Include="..\DeliveryService.Command.Application\DeliveryService.Command.Application.csproj" />
     <ProjectReference Include="..\DeliveryService.Command.Domain\DeliveryService.Command.Domain.csproj" />
     <ProjectReference Include="..\DeliveryService.Command.Persistence\DeliveryService.Command.Persistence.csproj" />
+    <ProjectReference Include="..\Shared.Contracts\Shared.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

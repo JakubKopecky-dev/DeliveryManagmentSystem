@@ -1,15 +1,19 @@
 ﻿using DeliveryService.Command.Application.Abstraction.Massaging;
 using DeliveryService.Command.Application.DTOs.Delivery;
 using DeliveryService.Command.Application.Interfaces.Repositories;
+using MassTransit;
+using Shared.Contracts.Enums;
+using Shared.Contracts.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DeliveryService.Command.Application.Features.Delivery.ChangeDeliveryStatus
 {
-    public class ChangeDeliveryStatusHandler(IDeliveryRepisotry deliveryRepository) : ICommandHandler<ChangeDeliveryStatusCommand,DeliveryDto?>
+    public class ChangeDeliveryStatusHandler(IDeliveryRepisotry deliveryRepository, IPublishEndpoint publishEndpoint ) : ICommandHandler<ChangeDeliveryStatusCommand,DeliveryDto?>
     {
         private readonly IDeliveryRepisotry _deliveryRepisotry = deliveryRepository;
+        private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 
 
 
@@ -25,6 +29,10 @@ namespace DeliveryService.Command.Application.Features.Delivery.ChangeDeliverySt
                 delivery.DeliveredAt = DateTime.UtcNow;
 
             Domain.Entities.Delivery updatedDelivery = await _deliveryRepisotry.UpdateAsync(delivery,ct);
+
+
+            DeliveryStatusChangedEvent deliveryEvent = new(updatedDelivery.Id, (DeliveryStatus)(int)updatedDelivery.Status,updatedDelivery.UpdatedAt!.Value, updatedDelivery.UpdatedAt);
+            await _publishEndpoint.Publish(deliveryEvent, ct);
 
             return updatedDelivery.DeliveryToDeliveryDto();
         }

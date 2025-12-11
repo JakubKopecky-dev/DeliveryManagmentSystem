@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UserService.Application.DTOs.User;
 using UserService.Application.Interfaces.Services;
-using UserService.Domain.Enums;
+using UserService.Domain.Types;
 
 namespace UserService.Api.Controller
 {

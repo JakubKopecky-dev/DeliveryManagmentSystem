@@ -1,3 +1,4 @@
+using DeliveryService.Query.Api.DependencyInjection;
 using DeliveryService.Query.Api.GraphQL;
 using DeliveryService.Query.Api.Middleware;
 using DeliveryService.Query.Application;
@@ -15,7 +16,13 @@ builder.Services.AddElastic(builder.Configuration);
 // Application
 builder.Services.AddApplicationServices();
 
+//Auth
+builder.Services.AddAuthenticationAndIdentityServiceCollection(builder.Configuration);
 
+// HttpContext accessor
+builder.Services.AddHttpContextAccessor();
+
+// GraphQL
 builder.Services
     .AddGraphQLServer()
     .AddQueryType<Query>();
@@ -31,6 +38,11 @@ var bootsrapper = scope.ServiceProvider.GetRequiredService<ElasticBootstrapper>(
 await bootsrapper.EnsureIndicesExistAsync();
 
 app.UseHttpsRedirection();
+
+// Auth
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapGraphQL();
 
 app.Run();

@@ -8,7 +8,7 @@ using UserService.Application.DTOs.Auth;
 using UserService.Application.DTOs.User;
 using UserService.Application.Interfaces.Jwt;
 using UserService.Application.Interfaces.Services;
-using UserService.Domain.Enums;
+using UserService.Domain.Types;
 using UserService.Infrastructure.Identity;
 
 namespace UserService.Infrastructure.Services
