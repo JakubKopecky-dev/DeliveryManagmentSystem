@@ -5,6 +5,7 @@ using UserService.Application.DTOs.User;
 using UserService.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authentication;
 using UserService.Domain.Types;
+using Microsoft.AspNetCore.Identity.Data;
 
 
 namespace UserService.Api.Controller
@@ -67,6 +68,15 @@ namespace UserService.Api.Controller
         5) Copy id_token from response
         
         */
+
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh(RefreshTokenDto dto)
+        {
+            var result = await _authService.RefreshAsync(dto.RefreshToken);
+            return Ok(result);
+        }
+
 
 
     }

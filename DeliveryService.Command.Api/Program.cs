@@ -1,7 +1,6 @@
 using DeliveryService.Command.Api.GraphQL;
 using DeliveryService.Command.Application;
 using DeliveryService.Command.Persistence;
-using DeliveryService.Command.Api.Middleware;
 using HotChocolate.Types;
 using DeliveryService.Command.Api.DependencyInjection;
 
@@ -27,7 +26,11 @@ builder.Services
     .AddGraphQLServer()
     .AddMutationType<Mutation>()
     .AddQueryType<Query>()
-    .AddAuthorization();
+    .AddAuthorization()
+    .AddApolloFederation();
+
+// Open Telemetry
+builder.Services.AddOpenTelemetryService();
 
 
 var app = builder.Build();
@@ -37,9 +40,6 @@ var env = app.Services.GetRequiredService<IWebHostEnvironment>();
 // Apply migration
 if (!env.IsEnvironment("Test"))
     app.ApplyMigrations();
-
-// Client cancellation logging
-app.UseClientCancellationLogging();
 
 app.UseHttpsRedirection();
 

@@ -21,6 +21,8 @@ namespace DeliveryService.Query.Domain.Models
 
         public string Phone { get; set; } = "";
 
+        public string Email { get; set; } = "";
+
         public uint PackageCount { get; set; }
 
         public double? PackageWeightKg { get; set; }

@@ -10,5 +10,6 @@ namespace UserService.Persistence
 {
     public class UserDbContext(DbContextOptions<UserDbContext> options) : IdentityDbContext<ApplicationUser,IdentityRole<Guid>,Guid>(options)
     {
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

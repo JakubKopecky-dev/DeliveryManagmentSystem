@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddKafkaMassTransit(builder.Configuration);
 builder.Services.AddElastic(builder.Configuration);
 
+// Open Telemetry
+builder.Services.AddOpenTelemetryService();
+
 var app = builder.Build();
 
 

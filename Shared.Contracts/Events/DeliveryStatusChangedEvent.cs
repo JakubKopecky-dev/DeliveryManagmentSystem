@@ -5,6 +5,6 @@ using Shared.Contracts.Enums;
 
 namespace Shared.Contracts.Events
 {
-    public sealed record DeliveryStatusChangedEvent(Guid DeliveryId,DeliveryStatus Status, DateTime UpdatedAt, DateTime? DeliveryAt);
+    public sealed record DeliveryStatusChangedEvent(Guid DeliveryId,DeliveryStatus Status, DateTime UpdatedAt, string CustomerEmail, DateTime? DeliveryAt);
 
 }

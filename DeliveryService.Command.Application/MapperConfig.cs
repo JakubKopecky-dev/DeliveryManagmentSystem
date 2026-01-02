@@ -20,6 +20,7 @@ namespace DeliveryService.Command.Application
                 RecipientName = delivery.RecipientName,
                 Address = delivery.Address,
                 Phone = delivery.Phone,
+                Email = delivery.Email,
                 PackageCount = (int)delivery.PackageCount,
                 PackageWeightKg = delivery.PackageWeightKg,
                 TotalVolumeM3 = delivery.TotalVolumeM3,

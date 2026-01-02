@@ -31,7 +31,7 @@ namespace DeliveryService.Command.Application.Features.Delivery.ChangeDeliverySt
             Domain.Entities.Delivery updatedDelivery = await _deliveryRepisotry.UpdateAsync(delivery,ct);
 
 
-            DeliveryStatusChangedEvent deliveryEvent = new(updatedDelivery.Id, (DeliveryStatus)(int)updatedDelivery.Status,updatedDelivery.UpdatedAt!.Value, updatedDelivery.UpdatedAt);
+            DeliveryStatusChangedEvent deliveryEvent = new(updatedDelivery.Id, (DeliveryStatus)(int)updatedDelivery.Status, updatedDelivery.UpdatedAt!.Value, updatedDelivery.Email, updatedDelivery.UpdatedAt);
             await _producer.Produce(deliveryEvent, ct);
 
             return updatedDelivery.DeliveryToDeliveryDto();

@@ -24,6 +24,7 @@ namespace DeliveryService.Query.SyncWorker.Consumers.Delivery
                 RecipientName = message.RecipientName,
                 Address = message.Address,
                 Phone = message.Phone,
+                Email = message.Email,
                 PackageCount = message.PackageCount,
                 PackageWeightKg = message.PackageWeightKg,
                 TotalVolumeM3 = message.TotalVolumeM3,

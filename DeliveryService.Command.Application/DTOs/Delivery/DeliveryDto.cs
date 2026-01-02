@@ -1,6 +1,7 @@
 ﻿using DeliveryService.Command.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DeliveryService.Command.Application.DTOs.Delivery
@@ -20,6 +21,8 @@ namespace DeliveryService.Command.Application.DTOs.Delivery
         public string Address { get; init; } = "";
 
         public string Phone { get; init; } = "";
+
+        public string Email { get; set; } = "";
 
         public int PackageCount { get; init; }
 

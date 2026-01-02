@@ -3,10 +3,10 @@ using CourierService.Api.DependencyInjection;
 using CourierService.Api.GraphQL;
 using CourierService.Api.Middleware;
 using CourierService.Application;
-using CourierService.Application.DTOs.Courier;
 using CourierService.Persistence;
-using HotChocolate.Authorization;
-using Microsoft.Extensions.Options;
+using HotChocolate.Execution;
+using Microsoft.Extensions.Diagnostics.Buffering;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +23,49 @@ builder.Services.AddAuthenticationAndIdentityServiceCollection(builder.Configura
 builder.Services.AddGraphQLServer()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
-    .AddAuthorization();    
+    .AddAuthorization()
+    .AddApolloFederation()
+    .UseRequest(
+        next => async context =>
+        {
+            await next(context);
+
+            if (context.Result is IOperationResult result &&
+                result.Errors is { Count: > 0 })
+            {
+                if (context.ContextData.TryGetValue(nameof(HttpContext), out var value) &&
+                    value is HttpContext http)
+                {
+                    http.Items["FlushLogBuffer"] = true;
+                }
+            }
+        })
+    .UseDefaultPipeline();
+
+
+// Grpc Clients
+builder.Services.AddGrpcClients(builder.Configuration);
+
+// Open Telemetry
+builder.Services.AddOpenTelemetryService();
+
+// Log buffer
+builder.Logging.AddGlobalBuffer(options =>
+{
+    options.MaxBufferSizeInBytes = 100 * 1024 * 1024; // 100 MB
+    options.MaxLogRecordSizeInBytes = 50 * 1024; // 50KB
+});
+
+builder.Logging.AddPerIncomingRequestBuffer(options =>
+{
+    options.AutoFlushDuration = TimeSpan.Zero;
+
+    options.Rules.Add(new LogBufferingFilterRule(
+        categoryName: "CourierService.", 
+        logLevel: LogLevel.Warning));
+});
+
+
 
 var app = builder.Build();
 
@@ -34,11 +76,11 @@ if (!env.IsEnvironment("Test"))
     app.ApplyMigrations();
 
 
-app.UseClientCancellationLogging();
-
-
 // Redirection
 app.UseHttpsRedirection();
+
+app.UseMiddleware<LogBufferHttpMiddleware>();
+
 
 // Auth
 app.UseAuthentication();

@@ -21,6 +21,8 @@ namespace DeliveryService.Query.Application.DTOs.Delivery
 
         public string Phone { get; init; } = "";
 
+        public string Email { get; init; } = "";
+
         public int PackageCount { get; init; }
 
         public double? PackageWeightKg { get; init; }

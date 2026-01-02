@@ -22,7 +22,7 @@ namespace DeliveryService.Command.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DeliveryService.Command.Domain.Entity.Delivery", b =>
+            modelBuilder.Entity("DeliveryService.Command.Domain.Entities.Delivery", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,6 +40,10 @@ namespace DeliveryService.Command.Persistence.Migrations
 
                     b.Property<DateTime?>("DeliveredAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ExternalOrderId")
                         .HasColumnType("uniqueidentifier");

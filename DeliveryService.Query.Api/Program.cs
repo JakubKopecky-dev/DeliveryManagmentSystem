@@ -1,6 +1,5 @@
 using DeliveryService.Query.Api.DependencyInjection;
 using DeliveryService.Query.Api.GraphQL;
-using DeliveryService.Query.Api.Middleware;
 using DeliveryService.Query.Application;
 using DeliveryService.Query.Infrastructure;
 using DeliveryService.Query.Infrastructure.Elastic;
@@ -26,13 +25,15 @@ builder.Services.AddHttpContextAccessor();
 builder.Services
     .AddGraphQLServer()
     .AddQueryType<Query>()
-    .AddAuthorization();
+    .AddAuthorization()
+    .AddApolloFederation();
+
+// Open Telemetry
+builder.Services.AddOpenTelemetryService();
+
 
 var app = builder.Build();
 
-
-// Client cancellation logging
-app.UseClientCancellationLogging();
 
 using var scope = app.Services.CreateScope();
 var bootsrapper = scope.ServiceProvider.GetRequiredService<ElasticBootstrapper>();

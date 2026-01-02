@@ -12,5 +12,6 @@ namespace UserService.Application.Interfaces.Services
         Task<UserDto?> DeleteUserAsync(Guid userId);
         Task<IReadOnlyList<UserDto>> GetAllUsersAsync(CancellationToken ct = default);
         Task<UserDto?> GetUserAsync(Guid userId);
+        Task<IsUserExistDto> IsUserExistByEmailAsync(string email);
     }
 }

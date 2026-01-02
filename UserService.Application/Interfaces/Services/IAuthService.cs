@@ -11,6 +11,7 @@ namespace UserService.Application.Interfaces.Services
     {
         Task<UserDto?> GetCurrentUserAsync(ClaimsPrincipal claimsPrincipal);
         Task<AuthResponseDto?> LoginUserAsync(AuthLoginDto authLoginDto);
+        Task<AuthResponseDto> RefreshAsync(string refreshToken);
         Task<AuthResponseDto?> RegisterUserAsync(AuthRegisterDto authRegisterDto);
     }
 }

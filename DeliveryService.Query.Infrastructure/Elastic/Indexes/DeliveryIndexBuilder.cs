@@ -17,7 +17,7 @@ namespace DeliveryService.Query.Infrastructure.Elastic.Indexes
         {
             var exists = await _client.Indices.ExistsAsync(IndexName, ct);
 
-            if (exists.Exists) 
+            if (exists.Exists)
                 return;
 
 
@@ -30,6 +30,7 @@ namespace DeliveryService.Query.Infrastructure.Elastic.Indexes
                 {"recipientName", new TextProperty() },
                 { "address", new TextProperty()},
                 {"phone", new TextProperty() },
+                {"email", new KeywordProperty() },
                 {"packageCount",  new IntegerNumberProperty()},
                 {"packageWeightKg",new DoubleNumberProperty() },
                 {"deliveryStatus", new KeywordProperty() },

@@ -40,6 +40,7 @@ namespace DeliveryService.Command.Api.GraphQL
                 RecipientName = input.RecipientName,
                 Address = input.Address,
                 Phone = input.Phone,
+                Email = input.Email,
                 PackageCount = input.PackageCount,
                 PackageWeightKg = input.PackageWeightKg,
                 TotalVolumeM3 = input.TotalVolumeM3

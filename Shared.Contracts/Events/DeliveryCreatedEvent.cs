@@ -21,6 +21,8 @@ namespace Shared.Contracts.Events
 
         public string Phone { get; init; } = "";
 
+        public string Email { get; set; } = "";
+
         public uint PackageCount { get; init; }
 
         public double? PackageWeightKg { get; init; }

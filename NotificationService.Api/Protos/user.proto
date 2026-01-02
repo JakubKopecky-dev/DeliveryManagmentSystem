@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+
+package user;
+option csharp_namespace = "UserService.Grpc";
+
+
+service UserService{
+    rpc IsUserExist (IsUserExistRequest) returns (IsUserExistResponse);
+}
+
+
+message IsUserExistRequest{
+    string email = 1;
+}
+
+message IsUserExistResponse{
+    bool user_exist = 1;
+    string user_id = 2;
+}

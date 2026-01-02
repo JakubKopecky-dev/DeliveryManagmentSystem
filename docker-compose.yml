@@ -7,7 +7,6 @@ services:
   # Elasticsearch
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:9.0.0
-        container_name: elasticsearch-deliverysystem
         environment:
           - discovery.type=single-node
           - xpack.security.enabled=false
@@ -17,7 +16,6 @@ services:
   # Kibana
     kibana:
         image: docker.elastic.co/kibana/kibana:9.0.0
-        container_name: kibana-deliverysystem
         environment:
           - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
         ports:
@@ -28,7 +26,6 @@ services:
   # Kafka
     kafka:
         image: apache/kafka:latest
-        container_name: kafka-develiverysystem
         ports:
           - "9092:9092" 
         environment:
@@ -67,7 +64,6 @@ services:
   # Kafka UI
     kafka-ui:
         image: provectuslabs/kafka-ui:latest
-        container_name: kafka-ui
         ports:
           - "8080:8080" 
         environment:
@@ -91,7 +87,6 @@ services:
         build:
             context: .
             dockerfile: CourierService.Api/Dockerfile
-        container_name: courierservice
         ports:
           - "7010:8080"
         environment:
@@ -99,6 +94,8 @@ services:
             ASPNETCORE_ENVIRONMENT: "Production"
             # Connection string to MSSQL conteiner
             ConnectionStrings__DefaultConnection: "Server=sqldb;Database=DeliveryManagmentSystem_CourierDb;User Id=sa;Password=Delivery2025!;TrustServerCertificate=True;"
+            # RouteService GrpcAddress
+            RouteService__GrpcAddress: "http://routeservice:8081"
         depends_on:
           - sqldb
 
@@ -107,7 +104,6 @@ services:
         build:
             context: .
             dockerfile: DeliveryService.Command.Api/Dockerfile
-        container_name: deliveryservice-command
         ports:
           - "7011:8080"
         environment:
@@ -126,7 +122,6 @@ services:
         build:
             context: .
             dockerfile: DeliveryService.Query.Api/Dockerfile
-        container_name: deliveryservice-query
         ports:
           - "7012:8080" 
         environment:
@@ -141,7 +136,6 @@ services:
         build:
             context: .
             dockerfile: DeliveryService.Query.SyncWorker/Dockerfile
-        container_name: deliveryservice-query-syncworker
         ports:
           - "7013:8080"
         environment:
@@ -158,15 +152,64 @@ services:
         build:
             context: .
             dockerfile: UserService.Api/Dockerfile
-        container_name: userservice
         ports:
           - "7014:8080"
+        expose:
+          - "8081" 
         environment:
             <<: *jwt-env
             Jwt__PrivateKey: "-----BEGIN EC PRIVATE KEY----- MHcCAQEEIKkOyBtD67AeTs7zGLwfZW9NDO9l+v3+6oUASTFzTEwJoAoGCCqGSM49 AwEHoUQDQgAElaSojkTx7x9ud4Q6H8RnTP22yNRstksLUL6MXApsm7J/lC4AdCNY R422CnS3UUqpRPkxPESyULdl4Woc7bXKog== -----END EC PRIVATE KEY-----"
-            Jwt__ExpiresInMinutes: 60000
+            Jwt__ExpiresInMinutes: 6000
             # Connection string to MSSQL conteiner
             ConnectionStrings__DefaultConnection: "Server=sqldb;Database=DeliveryManagmentSystem_UserDb;User Id=sa;Password=Delivery2025!;TrustServerCertificate=True;"
+            # Swagger
             EnableSwagger: true
+            # Kestrel configuration
+            ASPNETCORE_Kestrel__Endpoints__http__Url: "http://+:8080"
+            ASPNETCORE_Kestrel__Endpoints__http__Protocols: Http1
+            ASPNETCORE_Kestrel__Endpoints__grpc__Url: "http://+:8081"
+            ASPNETCORE_Kestrel__Endpoints__grpc__Protocols: Http2
         depends_on:
           - sqldb
+
+  # RouteService
+    routeservice:
+        build:
+            context: .
+            dockerfile: RouteService.Api/Dockerfile
+        ports:
+          - "7015:8080"
+        expose:
+          - "8081" 
+        environment:
+            # Open Route API Key
+            OpenRouteService__ApiKey: "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImI4MWFiZTU0YWYxZTRkMmQ4YjhhNmJkMmVkYmU2MjA4IiwiaCI6Im11cm11cjY0In0="
+            # Kestrel configuration
+            ASPNETCORE_Kestrel__Endpoints__http__Url: "http://+:8080"
+            ASPNETCORE_Kestrel__Endpoints__http__Protocols: Http1
+            ASPNETCORE_Kestrel__Endpoints__grpc__Url: "http://+:8081"
+            ASPNETCORE_Kestrel__Endpoints__grpc__Protocols: Http2
+
+  # NotificationService
+    notificationservice:
+        build:
+            context: .
+            dockerfile: NotificationService.Api/Dockerfile
+        ports:
+          - "7016:8080"
+        expose:
+          - "8081"
+        environment:
+            <<: *jwt-env
+            # Kafka config
+            Kafka__BootstrapServers: "kafka:9092"
+            # Elasticsearch
+            Elastic__Uri: "http://elasticsearch:9200"
+        depends_on:
+          - kafka
+          - elasticsearch
+            
+
+
+volumes:
+  kafka-data:

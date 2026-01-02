@@ -9,15 +9,18 @@ using UserService.Application.DTOs.User;
 using UserService.Application.Interfaces.Jwt;
 using UserService.Application.Interfaces.Services;
 using UserService.Domain.Types;
+using UserService.Infrastructure.Auth;
 using UserService.Infrastructure.Identity;
+using UserService.Infrastructure.Interfaces.Repositories;
 
 namespace UserService.Infrastructure.Services
 {
-    public  class ExternalAuthService(UserManager<ApplicationUser> userManger, IJwtGenerator jwtGenerator, ILogger<ExternalAuthService> logger) : IExternalAuthService
+    public  class ExternalAuthService(UserManager<ApplicationUser> userManger, IJwtGenerator jwtGenerator, ILogger<ExternalAuthService> logger, IRefreshTokecRepository refreshTokecRepository) : IExternalAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager = userManger;
         private readonly IJwtGenerator _jwtGenerator = jwtGenerator;
         private readonly ILogger<ExternalAuthService> _logger = logger;
+        private readonly IRefreshTokecRepository _refreshTokecRepository = refreshTokecRepository;
 
 
         public async Task<AuthResponseDto?> LoginWithGoogleAsync(string idToken)
@@ -61,7 +64,16 @@ namespace UserService.Infrastructure.Services
 
             var token = _jwtGenerator.GenerateToken(user.Id, user.Email!, user.UserName!, roles);
 
-            return new(user.UserToUserDto(), token);
+            string refreshToken = RefreshTokenHelper.Generate();
+
+            await _refreshTokecRepository.InsertAsync(new()
+            {
+                UserId = user.Id,
+                TokenHash = RefreshTokenHelper.Hash(refreshToken),
+                ExpiresAt = DateTime.UtcNow.AddDays(14)
+            });
+
+            return new(user.UserToUserDto(), token,refreshToken);
 
         }
 

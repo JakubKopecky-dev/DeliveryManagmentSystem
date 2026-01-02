@@ -45,6 +45,15 @@ namespace UserService.Infrastructure.Services
 
 
 
+        public async Task<IsUserExistDto> IsUserExistByEmailAsync(string email)
+        {
+            ApplicationUser? user = await _userManager.FindByEmailAsync(email);         
+
+            return new(user is not null,user?.Id);
+        }
+
+
+
         public async Task<UserDto?> CreateUserAsync(CreateUserDto createUserDto)
         {
             _logger.LogInformation("Creating new user. UserEmail: {UserEmail}.", createUserDto.Email);

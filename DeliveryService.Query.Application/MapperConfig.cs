@@ -19,6 +19,7 @@ namespace DeliveryService.Query.Application
                 CourierId = delivery.CourierId,
                 RecipientName = delivery.RecipientName,
                 Address = delivery.Address,
+                Email = delivery.Email,
                 Phone = delivery.Phone,
                 PackageCount = (int)delivery.PackageCount,
                 PackageWeightKg = delivery.PackageWeightKg,

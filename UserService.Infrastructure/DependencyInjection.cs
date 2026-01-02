@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UserService.Application.Interfaces.Services;
+using UserService.Infrastructure.Interfaces.Repositories;
 using UserService.Infrastructure.Services;
 
 namespace UserService.Infrastructure
@@ -15,7 +16,6 @@ namespace UserService.Infrastructure
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IExternalAuthService, ExternalAuthService>();
-
 
             return services;
         }

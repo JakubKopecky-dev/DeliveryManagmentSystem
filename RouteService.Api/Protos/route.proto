@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+package route;
+option csharp_namespace = "RouteService.Grpc";
+
+service RouteService{
+    rpc GetDistanceAndDuration(GetDistanceAndDurationRequest) returns (GetDistanceAndDurationResponse);
+}
+
+message GetDistanceAndDurationResponse{
+    double duration = 1;
+    double distance = 2;
+}
+
+message GetDistanceAndDurationRequest{
+    double latitude1 = 1;
+    double longitude1 = 2;
+    double latitude2 = 3;
+    double longitude2 = 4;
+    VehicleType vehicle_type = 5;
+}
+
+
+enum VehicleType{
+    CAR = 0;
+    WALKING = 1;
+    CYCLING = 2;
+}

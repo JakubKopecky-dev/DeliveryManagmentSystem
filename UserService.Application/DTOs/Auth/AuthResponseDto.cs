@@ -5,6 +5,6 @@ using UserService.Application.DTOs.User;
 
 namespace UserService.Application.DTOs.Auth
 {
-    public sealed record AuthResponseDto(UserDto User, string Token);
+    public sealed record AuthResponseDto(UserDto User, string AccessToken, string RefreshToken);
 
 }

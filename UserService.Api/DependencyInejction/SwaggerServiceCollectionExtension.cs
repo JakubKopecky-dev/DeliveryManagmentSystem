@@ -36,27 +36,9 @@ namespace UserService.Api.DependencyInejction
                 });
 
             
-
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
-
-
-                options.AddServer(new OpenApiServer { Url = "/" });
-                options.AddServer(new OpenApiServer { Url = "/user" });
-
-                /*
-                if (env.IsDevelopment())
-                {
-                    options.AddServer(new OpenApiServer { Url = "/" });
-                    options.AddServer(new OpenApiServer { Url = "/user" });
-                }
-                else
-                {
-                    options.AddServer(new OpenApiServer { Url = "/user" });
-                }
-                */
-
 
             });
 

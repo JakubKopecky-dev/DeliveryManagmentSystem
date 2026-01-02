@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DeliveryService.Command.Application.DTOs.Delivery
@@ -15,6 +16,9 @@ namespace DeliveryService.Command.Application.DTOs.Delivery
         public string Address { get; init; } = "";
 
         public string Phone { get; init; } = "";
+
+        [EmailAddress]
+        public string Email { get; set; } = "";
 
         public int PackageCount { get; init; }
 
