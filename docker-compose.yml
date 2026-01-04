@@ -162,7 +162,7 @@ services:
             <<: *jwt-env
             ASPNETCORE_ENVIRONMENT: "Production"
             Jwt__PrivateKey: "-----BEGIN EC PRIVATE KEY----- MHcCAQEEIKkOyBtD67AeTs7zGLwfZW9NDO9l+v3+6oUASTFzTEwJoAoGCCqGSM49 AwEHoUQDQgAElaSojkTx7x9ud4Q6H8RnTP22yNRstksLUL6MXApsm7J/lC4AdCNY R422CnS3UUqpRPkxPESyULdl4Woc7bXKog== -----END EC PRIVATE KEY-----"
-            Jwt__ExpiresInMinutes: 6000
+            Jwt__ExpiresInMinutes: 60
             # Connection string to MSSQL conteiner
             ConnectionStrings__DefaultConnection: "Server=sqldb;Database=DeliveryManagmentSystem_UserDb;User Id=sa;Password=Delivery2025!;TrustServerCertificate=True;"
             # Swagger
